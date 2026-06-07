@@ -1,0 +1,52 @@
+<!doctype html>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="stylesheet" href="/ARGUS/docs/style.css">
+<title>ARGUS — Network Architecture (Authorized)</title>
+<body>
+  <header class="site-header">
+    <div class="container inner">
+      <div class="brand">
+        <img src="/ARGUS/docs/assets/argus_logo_180.png" alt="ARGUS logo">
+        <div>
+          <h1>Network Architecture</h1>
+          <p class="tag">Detailed diagrams — authorized viewers</p>
+        </div>
+      </div>
+      <nav class="top-nav">
+        <a href="/ARGUS/docs/authorized/index.html">Back</a>
+      </nav>
+    </div>
+  </header>
+  <div class="container site-wrap">
+    <div class="main doc-body">
+      <div id="content">Loading...</div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+  <script>
+    mermaid.initialize({startOnLoad:false, theme: 'default'});
+    fetch('/ARGUS/docs/assets/ARGUS_Network_Architecture.md')
+      .then(r=>r.text())
+      .then(md=>{
+        // Render markdown to HTML
+        const html = marked.parse(md);
+        document.getElementById('content').innerHTML = html;
+        // Find mermaid blocks and render them
+        document.querySelectorAll('code.language-mermaid, code.mermaid').forEach((block, i)=>{
+          const pre = block.parentElement;
+          const graph = block.textContent;
+          const id = 'mermaid-'+i;
+          const div = document.createElement('div');
+          div.className = 'mermaid';
+          div.id = id;
+          div.textContent = graph;
+          pre.parentNode.replaceChild(div, pre);
+          try{ mermaid.init(undefined, '#'+id); }catch(e){console.error(e)}
+        });
+      })
+      .catch(e=>{document.getElementById('content').innerText='Failed to load content.';console.error(e)})
+  </script>
+</body>
