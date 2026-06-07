@@ -1,0 +1,8 @@
+[
+  {"id":"design","title":"Project Plan","path":"/ARGUS/docs/design.html","content":"Project ARGUS executive summary phases schedule ROI equipment budget operating cost phases schedule break-even analysis"},
+  {"id":"security","title":"Security Plan","path":"/ARGUS/docs/security.html","content":"Defense in depth physical security access control network data retention legal compliance privacy notices incident response audit checklist"},
+  {"id":"network","title":"Network Architecture","path":"/ARGUS/docs/network.html","content":"Three sites clubhouse front gate rear gate segmented networks VLAN isolation UNVR retention credential caching offline behavior"},
+  {"id":"ops","title":"Operations Guide","path":"/ARGUS/docs/ops.html","content":"How to watch live cameras review footage add deactivate fobs unlock remotely troubleshooting contacts monthly routine"},
+  {"id":"tracker","title":"Tracker & Budget","path":"/ARGUS/docs/tracker.html","content":"Budget phases equipment list open items schedule decisions log action items procurement"},
+  {"id":"transition","title":"Transition Plan","path":"/ARGUS/docs/transition.html","content":"Parallel operation zero downtime gate cutover steps credential migration cutover checklist resident communications"}
+]

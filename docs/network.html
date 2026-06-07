@@ -4,16 +4,37 @@
 <link rel="stylesheet" href="/ARGUS/docs/style.css">
 <title>ARGUS — Network Architecture</title>
 <body>
-  <div class="container doc-body">
+  <div class="container site-wrap">
+    <aside class="sidebar">
+      <div class="nav">
+        <h3>Contents</h3>
+        <a href="/ARGUS/docs/design.html">Project Plan</a>
+        <a href="/ARGUS/docs/security.html">Security</a>
+        <a href="/ARGUS/docs/network.html">Network</a>
+        <a href="/ARGUS/docs/ops.html">Operations</a>
+        <a href="/ARGUS/docs/tracker.html">Tracker</a>
+        <a href="/ARGUS/docs/transition.html">Transition</a>
+        <a href="/ARGUS/docx_exports/">DOCX Exports</a>
+        <a href="https://github.com/howarddalerapp/ARGUS">View on GitHub</a>
+        <hr>
+        <div class="search-box">
+          <input id="search-input" placeholder="Search site (full text)..." />
+        </div>
+        <div id="search-results" class="search-results"></div>
+      </div>
+    </aside>
+
+    <div class="main doc-body">
     <h1>Network Architecture</h1>
     <p class="small">Logical and physical topology for clubhouse and both gates. See <code>ARGUS_Network_Architecture.md</code> for full diagrams.</p>
 
     <h2>Key points</h2>
     <ul>
-      <li>Three sites: Clubhouse (WOW fiber), Front Gate (LTE Pro), Rear Gate (LTE Pro)</li>
-      <li>VLAN segmentation: Cameras (VLAN 10), Access (VLAN 20), Management (VLAN 1), Guest (VLAN 30)</li>
-      <li>UNVR stores footage on-premises (30-day retention). Cameras have no outgoing internet access.</li>
-      <li>Access Hubs cache credentials locally — gates work during LTE outages.</li>
+      <li>Three sites: Clubhouse (WOW fiber), Front Gate (cellular), Rear Gate (cellular).</li>
+      <li>Network is segmented so security systems (cameras, access control) are isolated from guest and resident networks — this minimizes attack surface.</li>
+      <li>UNVR stores footage on-premises (standard retention policy applies). Cameras are restricted from direct outbound access to protect footage integrity.</li>
+      <li>Access Hubs cache credentials locally — gates remain functional during temporary WAN outages.</li>
+      <li>Detailed network diagrams, addressing, and configuration are considered operational-sensitive and are available only to authorized personnel on request.</li>
     </ul>
 
     <h2>IP plan & device map</h2>
