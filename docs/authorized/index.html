@@ -34,7 +34,7 @@ btn.addEventListener('click', ()=>{
   const v = prompt('Enter access code');
   if(!v) return;
   if(v.trim()===code){
-    result.innerHTML = '<p><a href="/ARGUS/docs/authorized/network_architecture.html">Open Network Architecture</a></p>';
+  result.innerHTML = '<p><a href="/ARGUS/authorized/network_architecture.html">Open Network Architecture</a></p>';
   } else {
     result.innerText = 'Access denied.';
   }
