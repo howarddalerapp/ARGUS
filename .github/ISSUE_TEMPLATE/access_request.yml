@@ -1,0 +1,20 @@
+name: Access request
+about: Request access to sensitive operational documentation
+title: "[Access Request] "
+labels: access-request
+assignees: howarddalerapp
+
+body:
+  - type: markdown
+    attributes:
+      value: "Request access to operational docs (network diagrams, device credentials, or camera placement). Include your role and justification."
+  - type: input
+    id: role
+    attributes:
+      label: Role
+      description: Your role (Board member, contractor, etc.)
+  - type: input
+    id: justification
+    attributes:
+      label: Justification
+      description: Why you need access and what you'll do with it
