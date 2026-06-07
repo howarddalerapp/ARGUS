@@ -40,7 +40,7 @@ def main():
         out.append({
             'id': p.stem.lower().replace('argus_',''),
             'title': title_from_md(p),
-            'path': f'/ARGUS/docs/{p.stem.replace("ARGUS_","").lower()}.html',
+            'path': f'/ARGUS/{p.stem.replace("ARGUS_","").lower()}.html',
             'content': text_from_md(p),
         })
     DOCS.mkdir(parents=True, exist_ok=True)

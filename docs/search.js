@@ -1,7 +1,7 @@
 // Minimal client-side full-text search using Fuse.js-like fuzzy search
 (function(){
   async function init(){
-    const res = await fetch('/ARGUS/docs/search_index.json');
+  const res = await fetch('/ARGUS/search_index.json');
     const index = await res.json();
     const options = {keys:['title','content'],threshold:0.4};
     // Simple scoring search (no external Fuse required)
