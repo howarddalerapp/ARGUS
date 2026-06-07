@@ -1,0 +1,24 @@
+<!doctype html>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="stylesheet" href="/ARGUS/docs/style.css">
+<title>ARGUS — Network Architecture</title>
+<body>
+  <div class="container doc-body">
+    <h1>Network Architecture</h1>
+    <p class="small">Logical and physical topology for clubhouse and both gates. See <code>ARGUS_Network_Architecture.md</code> for full diagrams.</p>
+
+    <h2>Key points</h2>
+    <ul>
+      <li>Three sites: Clubhouse (WOW fiber), Front Gate (LTE Pro), Rear Gate (LTE Pro)</li>
+      <li>VLAN segmentation: Cameras (VLAN 10), Access (VLAN 20), Management (VLAN 1), Guest (VLAN 30)</li>
+      <li>UNVR stores footage on-premises (30-day retention). Cameras have no outgoing internet access.</li>
+      <li>Access Hubs cache credentials locally — gates work during LTE outages.</li>
+    </ul>
+
+    <h2>IP plan & device map</h2>
+    <p>Static IPs reserved for controller, UNVR, PoE switch; DHCP reservations for cameras and APs. Full table in the source file.</p>
+
+    <p class="small">Full source: <a href="../ARGUS_Network_Architecture.md">ARGUS_Network_Architecture.md</a></p>
+  </div>
+</body>

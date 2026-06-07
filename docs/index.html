@@ -3,32 +3,47 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>ARGUS — Project Home</title>
-    <style>
-      body { font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial; margin:0; color:#0b1320; background: linear-gradient(180deg,#f7fafc,#eef2f7); }
-      .wrap { max-width:900px; margin:48px auto; padding:32px; background:#fff; border-radius:12px; box-shadow:0 6px 30px rgba(11,19,32,0.08); }
-      h1 { margin:0 0 8px; font-size:28px; }
-      p.lead { color:#334155; margin:0 0 18px; }
-      .cards { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:14px; margin-top:18px }
-      a.card { display:block; padding:14px; border-radius:10px; background:#f8fafc; color:#0b1220; text-decoration:none; border:1px solid rgba(11,19,32,0.04); }
-      a.card:hover { transform:translateY(-3px); box-shadow:0 6px 18px rgba(11,19,32,0.06); }
-      footer { margin-top:20px; font-size:13px; color:#64748b }
-    </style>
+    <title>ARGUS — River Shoals HOA</title>
+    <link rel="stylesheet" href="/ARGUS/docs/style.css">
   </head>
   <body>
-    <div class="wrap">
-      <h1>ARGUS</h1>
-      <p class="lead">Project docs and plans. Click a card to open the source file in the repo.</p>
-      <div class="cards">
-        <a class="card" href="../ARGUS_Project_Plan.md">Project Plan</a>
-        <a class="card" href="../ARGUS_Operations_Guide.md">Operations Guide</a>
-        <a class="card" href="../ARGUS_Network_Architecture.md">Network Architecture</a>
-        <a class="card" href="../ARGUS_Security_Plan.md">Security Plan</a>
-        <a class="card" href="../ARGUS_Tracker.md">Project Tracker</a>
-        <a class="card" href="../ARGUS_Transition_Plan.md">Transition Plan</a>
-        <a class="card" href="../ARGUS_Decisions_Log.docx">Decisions Log (DOCX)</a>
+    <header class="site-header">
+      <div class="container">
+        <h1>ARGUS</h1>
+        <p class="tag">River Shoals HOA — Community Security & Access Modernization</p>
       </div>
-      <footer>To publish: push this repo to GitHub and enable Pages (Branch: <strong>main</strong>, Folder: <strong>/docs</strong>).</footer>
-    </div>
+    </header>
+
+    <main class="container card-grid">
+      <section class="hero">
+        <h2>Welcome — project documentation & operational site</h2>
+        <p>ARGUS centralizes design, security, network, operations and the cutover plan so the board, GHS, and contractors have a single reference.</p>
+        <p class="muted">This site is a quick, human-friendly view. The repository contains full Markdown source files for printing or export.</p>
+      </section>
+
+      <nav class="cards">
+        <a class="card" href="design.html">Project Plan & Phases</a>
+        <a class="card" href="security.html">Security — Policies & Checklists</a>
+        <a class="card" href="network.html">Network Architecture</a>
+        <a class="card" href="ops.html">Operations Guide — How-to</a>
+        <a class="card" href="tracker.html">Budget & Tracker</a>
+        <a class="card" href="transition.html">Transition & Cutover Plan</a>
+        <a class="card" href="../docx_exports/">DOCX Export Folder</a>
+        <a class="card" href="https://github.com/howarddalerapp/ARGUS">View on GitHub</a>
+      </nav>
+
+      <section class="notes">
+        <h3>Status</h3>
+        <ul>
+          <li>Repo pushed to GitHub: <code>main</code> branch (this site published from <code>/docs</code>).</li>
+          <li>Pages URL: <a href="https://howarddalerapp.github.io/ARGUS/">https://howarddalerapp.github.io/ARGUS/</a></li>
+          <li>Docx exports are stored in <code>docx_exports/</code> for offline export.</li>
+        </ul>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container">© River Shoals HOA — ARGUS project · Last updated: June 2026</div>
+    </footer>
   </body>
 </html>

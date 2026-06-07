@@ -1,0 +1,24 @@
+<!doctype html>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="stylesheet" href="/ARGUS/docs/style.css">
+<title>ARGUS — Transition Plan</title>
+<body>
+  <div class="container doc-body">
+    <h1>Transition Plan — CPS to ARGUS</h1>
+    <p class="small">Phased cutover, parallel operation strategy, and gate cutover checklist — from <code>ARGUS_Transition_Plan.md</code>.</p>
+
+    <h2>Strategy</h2>
+    <p>Build ARGUS in parallel with CPS, test thoroughly, then cut over one system at a time. Key principle: zero downtime and no resident locked out.</p>
+
+    <h2>Gate cutover — highlights</h2>
+    <ol>
+      <li>Test credentials & LTE stability 48h pre-cutover</li>
+      <li>Photo current CPS wiring before disconnect</li>
+      <li>Connect ARGUS UA-Hub to gate dry contact, test four checks (fob, admin remote unlock, loop exit, offline test)</li>
+      <li>Monitor 48 hours post-cutover</li>
+    </ol>
+
+    <p class="small">Full source: <a href="../ARGUS_Transition_Plan.md">ARGUS_Transition_Plan.md</a></p>
+  </div>
+</body>
