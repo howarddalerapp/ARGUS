@@ -28,13 +28,34 @@
   <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
   <script>
     mermaid.initialize({startOnLoad:false, theme: 'default'});
-    fetch('/ARGUS/docs/assets/ARGUS_Network_Architecture.md')
-      .then(r=>r.text())
-      .then(md=>{
-        // Render markdown to HTML
-        const html = marked.parse(md);
-        document.getElementById('content').innerHTML = html;
-        // Find mermaid blocks and render them
+    // Try to load pre-rendered SVGs first. If none exist, fall back to rendering markdown + mermaid in the browser.
+    (async function(){
+      const svgDir = '/ARGUS/docs/assets/mermaid/';
+      try{
+        // Try listing known filenames (diagram-1.svg ... up to 10)
+        const container = document.getElementById('content');
+        let foundAny = false;
+        for(let i=1;i<=10;i++){
+          const url = svgDir + `diagram-${i}.svg`;
+          try{
+            const r = await fetch(url, {method:'HEAD'});
+            if(r.ok){
+              // insert image
+              const img = document.createElement('img');
+              img.src = url;
+              img.alt = `Diagram ${i}`;
+              img.className = 'mermaid-svg';
+              container.appendChild(img);
+              foundAny = true;
+            }
+          }catch(e){/* ignore */}
+        }
+        if(foundAny) return;
+
+        // No pre-rendered SVGs found; fetch markdown and render client-side
+        const r = await fetch('/ARGUS/docs/assets/ARGUS_Network_Architecture.md');
+        const md = await r.text();
+        container.innerHTML = marked.parse(md);
         document.querySelectorAll('code.language-mermaid, code.mermaid').forEach((block, i)=>{
           const pre = block.parentElement;
           const graph = block.textContent;
@@ -46,7 +67,10 @@
           pre.parentNode.replaceChild(div, pre);
           try{ mermaid.init(undefined, '#'+id); }catch(e){console.error(e)}
         });
-      })
-      .catch(e=>{document.getElementById('content').innerText='Failed to load content.';console.error(e)})
+      }catch(e){
+        document.getElementById('content').innerText='Failed to load content.';
+        console.error(e)
+      }
+    })();
   </script>
 </body>

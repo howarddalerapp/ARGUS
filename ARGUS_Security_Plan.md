@@ -1,404 +1,316 @@
 # Project ARGUS — Security Plan
 ## River Shoals HOA | Defense-in-Depth Framework
 
+Executive summary
+-----------------
+
+This security plan documents the defense-in-depth approach for ARGUS. It lists the security layers (from physical controls through legal/compliance), operational responsibilities, incident response, and the pre-go-live checklist for each project phase.
+
+Key principles:
+- Minimize attack surface via network segmentation and least privilege access.
+- Keep sensitive data on-premises; share footage only via controlled, documented processes.
+- Maintain separation of duties between system administration (Howard), operations (GHS), and board governance.
+
 *Last updated: June 2026 | Owner: Howard Rapp*
 
-> **Defense in depth** means no single point of failure protects the community. Security is layered — physical, electronic, procedural, and legal — so that if any one layer is bypassed or fails, others remain intact.
+> **Defense in depth** means no single point of failure protects the community. Security is layered — physical, electronic, procedural, and legal — so that if any one layer is bypassed or fails, other layers remain intact. This document defines those layers for the ARGUS system.
 
 ---
 
-## 1. The Eight Layers of Defense
+## 1. Security Layers Overview
 
-```mermaid
-%%{init: {'theme': 'base', 'themeVariables': {'primaryColor': '#0f172a', 'lineColor': '#475569'}}}%%
-graph BT
-    L0["🔒 LAYER 0 — PHYSICAL SECURITY\nGates · Cameras · Lighting · Locks\nVisible deterrence and perimeter control"]
-    L1["🪪 LAYER 1 — ACCESS CONTROL\nFob lifecycle · Least privilege · Schedules\nCredentialed entry only — no tailgating"]
-    L2["🌐 LAYER 2 — NETWORK SECURITY\nVLAN segmentation · Firewall rules\nCameras isolated · No open ports"]
-    L3["💾 LAYER 3 — DATA SECURITY\nOn-premises UNVR only · 30-day retention\nAccess logs 90 days · Footage policy"]
-    L4["🔍 LAYER 4 — MONITORING & DETECTION\nAI motion alerts · Smart detection zones\nAnomaly response · After-hours alerts"]
-    L5["🚨 LAYER 5 — INCIDENT RESPONSE\nEscalation paths · GHS first response\nHoward technical · Luke Burke legal"]
-    L6["📋 LAYER 6 — AUDIT & ACCOUNTABILITY\nFull access logs · Board oversight\nAnnual review · Separation of duties"]
-    L7["⚖️ LAYER 7 — LEGAL & COMPLIANCE\nAttorney review · Privacy notices\nLPR data policy · Insurance notification"]
-
-    L0 --> L1 --> L2 --> L3 --> L4 --> L5 --> L6 --> L7
-
-    style L0 fill:#7f1d1d,stroke:#ef4444,color:#fecaca
-    style L1 fill:#7c2d12,stroke:#f97316,color:#fed7aa
-    style L2 fill:#713f12,stroke:#eab308,color:#fef08a
-    style L3 fill:#14532d,stroke:#22c55e,color:#bbf7d0
-    style L4 fill:#0c4a6e,stroke:#0ea5e9,color:#bae6fd
-    style L5 fill:#1e1b4b,stroke:#6366f1,color:#c7d2fe
-    style L6 fill:#4a1d96,stroke:#a855f7,color:#e9d5ff
-    style L7 fill:#500724,stroke:#ec4899,color:#fbcfe8
+```
+  ┌───────────────────────────────────────────────────────────┐
+  │                    LAYER 7: LEGAL / COMPLIANCE            │
+  │         Attorney review, privacy notices, data policy     │
+  ├───────────────────────────────────────────────────────────┤
+  │                    LAYER 6: AUDIT & ACCOUNTABILITY        │
+  │      Full access logs, video retention, board oversight   │
+  ├───────────────────────────────────────────────────────────┤
+  │                    LAYER 5: INCIDENT RESPONSE             │
+  │       Defined escalation paths, GHS first response        │
+  ├───────────────────────────────────────────────────────────┤
+  │                    LAYER 4: MONITORING & DETECTION        │
+  │    AI motion alerts, smart detection, anomaly response    │
+  ├───────────────────────────────────────────────────────────┤
+  │                    LAYER 3: DATA SECURITY                 │
+  │   On-premises storage, access restrictions, encryption    │
+  ├───────────────────────────────────────────────────────────┤
+  │                    LAYER 2: NETWORK SECURITY              │
+  │     VLAN segmentation, firewall rules, no open ports      │
+  ├───────────────────────────────────────────────────────────┤
+  │                    LAYER 1: ACCESS CONTROL                │
+  │    Credential management, fob lifecycle, least privilege  │
+  ├───────────────────────────────────────────────────────────┤
+  │                    LAYER 0: PHYSICAL SECURITY             │
+  │     Gates, cameras, lighting, locks, visible deterrence   │
+  └───────────────────────────────────────────────────────────┘
 ```
 
 ---
 
-## 2. Layer 0: Physical Security
+## Layer 0: Physical Security
 
-```mermaid
-%%{init: {'theme': 'base', 'themeVariables': {'primaryColor': '#0f172a', 'lineColor': '#ef4444'}}}%%
-graph LR
-    subgraph GATES["⚙️ GATES — Primary Perimeter"]
-        G1["Front Gate\nW. Georgia Rd entry\nCredential-controlled"]
-        G2["Rear Gate\nSecondary entry\nCredential-controlled"]
-        G3["Loop Detectors\nHardwired exit\nNo credential needed to exit"]
-    end
+Physical controls are the outermost layer. They deter, delay, and detect unauthorized access before any electronic system is involved.
 
-    subgraph CAMERAS["📷 CAMERAS — Detection & Deterrence"]
-        C1["AI-360 × 2\nPool deck\n360° fisheye · no blind spots"]
-        C2["AI-Pro × 2\nParking + door\nFace + plate capture"]
-        C3["AI-Bullet × 1\nPerimeter fence\nLong-range IR"]
-        C4["AI-Pro LPR × 2\nBoth gates\nEvery plate recorded"]
-    end
+**Gates:**
+- Both vehicle gates are controlled-access. They do not open without a valid credential (fob/NFC) or visitor intercom authorization.
+- Gate operators use hardwired loop detectors for exit — residents leaving do not need credentials.
+- Gates are the primary perimeter control. Tailgating (following a vehicle through without credentials) is the main physical vulnerability. LPR cameras address this by capturing every plate that enters.
 
-    subgraph LOCKS["🔒 LOCKS — Controlled Entry"]
-        L1["Pool gate\nElectronic strike\nAccess Hub controlled"]
-        L2["Clubhouse door\nMaglock\nContractor installed\nFire egress safe"]
-    end
+**Cameras:**
+- All cameras are visible. Visible cameras are a deterrent. No hidden cameras are installed or planned.
+- AI-series cameras provide full coverage of: pool deck (360°), parking lot, clubhouse exterior door, perimeter fence, and both gate entry lanes.
+- Footage is retained for approximately 30 days on the UNVR.
 
-    THREAT["👤 Unauthorized\nPerson / Vehicle"] -->|"Deterred by visible cameras"| CAMERAS
-    THREAT -->|"Stopped at"| GATES
-    THREAT -->|"Cannot enter without credential"| LOCKS
+**Lighting:**
+- AI-Pro and AI-Bullet cameras have built-in IR illumination. They record in full darkness at effective range.
+- Existing lighting at the clubhouse and gates is assumed adequate. If incident review reveals blind spots due to poor lighting, this section will be updated.
 
-    style GATES fill:#7f1d1d,stroke:#ef4444,color:#fecaca
-    style CAMERAS fill:#065f46,stroke:#10b981,color:#a7f3d0
-    style LOCKS fill:#92400e,stroke:#f59e0b,color:#fde68a
-    style THREAT fill:#1f2937,stroke:#6b7280,color:#d1d5db
-    style G1 fill:#450a0a,stroke:#ef4444,color:#fca5a5
-    style G2 fill:#450a0a,stroke:#ef4444,color:#fca5a5
-    style G3 fill:#450a0a,stroke:#ef4444,color:#fca5a5
-    style C1 fill:#0d3321,stroke:#10b981,color:#86efac
-    style C2 fill:#0d3321,stroke:#10b981,color:#86efac
-    style C3 fill:#0d3321,stroke:#10b981,color:#86efac
-    style C4 fill:#0d3321,stroke:#10b981,color:#86efac
-    style L1 fill:#431407,stroke:#f59e0b,color:#fcd34d
-    style L2 fill:#431407,stroke:#f59e0b,color:#fcd34d
-```
+**Locks:**
+- Pool gate: Existing magnetic lock integrated with the Access Hub.
+- Clubhouse door: Maglock installed by licensed contractor. Door remains locked at all times and opens only with a valid credential or manual override by authorized staff.
+- Gate operators: Existing electric operators, controlled via dry contact relay from Access Hub.
 
 ---
 
-## 3. Layer 1: Access Control — Credential Lifecycle
+## Layer 1: Access Control
 
-```mermaid
-%%{init: {'theme': 'base', 'themeVariables': {'primaryColor': '#0f172a', 'lineColor': '#f59e0b'}}}%%
-flowchart TD
-    START(["🏠 Resident Moves In"]) --> ISSUE["GHS issues fob\nRegisters in UniFi Access\nAssigns zones: gates + pool"]
-    ISSUE --> ACTIVE["✅ Fob Active\nGates · Pool · Schedule-based"]
+Access control defines who can enter what, when, and under what conditions.
 
-    ACTIVE --> Q1{"Event?"}
+**Credential types:**
+- **Key fob (UA-Fob):** Issued to all households. One fob per lot as standard; additional fobs available through GHS at board's discretion.
+- **NFC (smartphone):** UniFi Access supports mobile credentials via the UniFi Access app. Optional — fob is the primary credential.
+- **Visitor intercom (front gate only):** Visitors call in via the AI-Theta-Pro. GHS or a board member answers remotely and grants or denies access.
+- **Admin override:** GHS admins can unlock any door or gate remotely through the UniFi Access dashboard.
 
-    Q1 -->|"Fob lost / stolen"| DEACT1["🚨 GHS deactivates\nIMMEDIATELY in UniFi\nPhysical fob worthless"]
-    Q1 -->|"Resident moves out"| DEACT2["GHS deactivates\nSame day as notice"]
-    Q1 -->|"Seasonal rental"| TEMP["Time-limited credential\nAccess schedule set\nAuto-expires"]
-    Q1 -->|"Contractor access"| CONT["Named user profile\nTime-limited window\nBoard approval required"]
-    Q1 -->|"Fob not returned at sale"| DEACT3["Deactivate immediately\nPhysical possession\ngrants nothing"]
+**Credential lifecycle — key principles:**
 
-    DEACT1 --> REISSUE["Issue replacement fob\nNew credential · New number"]
-    DEACT2 --> END1(["Account deleted"])
-    DEACT3 --> END2(["Account deleted"])
-    REISSUE --> ACTIVE
-    TEMP --> EXPIRE(["Credential auto-expires"])
-    CONT --> EXPIRE
-
-    style START fill:#065f46,stroke:#10b981,color:#fff
-    style ISSUE fill:#0e7490,stroke:#06b6d4,color:#fff
-    style ACTIVE fill:#14532d,stroke:#22c55e,color:#bbf7d0
-    style Q1 fill:#1e3a5f,stroke:#3b82f6,color:#fff
-    style DEACT1 fill:#7f1d1d,stroke:#ef4444,color:#fecaca
-    style DEACT2 fill:#7f1d1d,stroke:#ef4444,color:#fecaca
-    style DEACT3 fill:#7f1d1d,stroke:#ef4444,color:#fecaca
-    style TEMP fill:#92400e,stroke:#f59e0b,color:#fde68a
-    style CONT fill:#4a1d96,stroke:#8b5cf6,color:#e9d5ff
-    style REISSUE fill:#065f46,stroke:#10b981,color:#fff
-    style END1 fill:#374151,stroke:#6b7280,color:#d1d5db
-    style END2 fill:#374151,stroke:#6b7280,color:#d1d5db
-    style EXPIRE fill:#374151,stroke:#6b7280,color:#d1d5db
-```
+| Event | Action | Who |
+|---|---|---|
+| New resident moves in | Issue fob, activate in UniFi Access | GHS |
+| Resident moves out | Immediately deactivate fob in UniFi Access | GHS (same day as notice) |
+| Fob reported lost | Immediately deactivate in UniFi Access, issue replacement | GHS |
+| Fob not returned at sale | Deactivate — the system is credential-based, physical possession of a deactivated fob grants nothing | GHS |
+| Seasonal rental tenant | Create time-limited credential with access schedule | GHS |
+| Contractor needing temporary access | Issue time-limited credential tied to work period only | GHS (board approval required) |
 
 **Least privilege by zone:**
 
-```mermaid
-%%{init: {'theme': 'base', 'themeVariables': {'primaryColor': '#0f172a', 'lineColor': '#6b7280'}}}%%
-graph LR
-    subgraph ZONES["ACCESS ZONES"]
-        Z1["🚗 Vehicle Gates\n24/7 all residents"]
-        Z2["🏊 Pool Gate\nPool hours only\nAll residents"]
-        Z3["🚪 Clubhouse Door\nGHS + board +\nauthorized residents only"]
-        Z4["🖥️ UniFi Dashboard\nAdmin: Howard + GHS\nViewer: all board"]
-    end
-
-    RES["👥 All Residents"] -->|"✅ Full access"| Z1
-    RES -->|"✅ Scheduled"| Z2
-    RES -->|"❌ Not by default"| Z3
-    GHS2["🏢 GHS Staff"] --> Z1 & Z2 & Z3 & Z4
-    BOARD["📋 Board Members"] -->|"Viewer only"| Z4
-
-    style ZONES fill:#0f172a,stroke:#475569,color:#e2e8f0
-    style Z1 fill:#065f46,stroke:#10b981,color:#fff
-    style Z2 fill:#065f46,stroke:#10b981,color:#fff
-    style Z3 fill:#92400e,stroke:#f59e0b,color:#fff
-    style Z4 fill:#4c1d95,stroke:#a78bfa,color:#fff
-    style RES fill:#1e3a5f,stroke:#3b82f6,color:#fff
-    style GHS2 fill:#0e7490,stroke:#06b6d4,color:#fff
-    style BOARD fill:#1e1b4b,stroke:#6366f1,color:#fff
-```
-
----
-
-## 4. Layer 2: Network Security — Firewall Rules
-
-```mermaid
-%%{init: {'theme': 'base', 'themeVariables': {'primaryColor': '#0f172a', 'lineColor': '#4b5563'}}}%%
-flowchart LR
-    CAMERA["📷 Camera\nVLAN 10"] -->|"✅ ALLOWED\nRecord footage"| UNVR4["💾 UNVR"]
-    CAMERA -->|"🚫 BLOCKED\nNo internet"| INTERNET["🌐 Internet"]
-    CAMERA -->|"🚫 BLOCKED\nCan't reach"| ACHUB["🔑 Access Hub"]
-    CAMERA -->|"🚫 BLOCKED\nCan't reach"| WIFI["📶 WiFi clients"]
-
-    ACHUB -->|"✅ ALLOWED\nManagement only"| UBCLOUD["☁️ Ubiquiti Cloud\nHTTPS only"]
-    ACHUB -->|"🚫 BLOCKED\nNo browsing"| INTERNET
-    ACHUB -->|"🚫 BLOCKED"| CAMERA
-
-    GUEST["📱 Guest WiFi\nVLAN 30"] -->|"✅ ALLOWED"| INTERNET
-    GUEST -->|"🚫 BLOCKED\nFully isolated"| CAMERA
-    GUEST -->|"🚫 BLOCKED\nFully isolated"| ACHUB
-
-    ADMIN["🖥️ Admin\nVLAN 1"] -->|"✅ ALLOWED"| UNVR4
-    ADMIN -->|"✅ ALLOWED"| ACHUB
-    ADMIN -->|"✅ ALLOWED"| INTERNET
-
-    style CAMERA fill:#065f46,stroke:#10b981,color:#fff
-    style UNVR4 fill:#4c1d95,stroke:#a78bfa,color:#fff
-    style ACHUB fill:#92400e,stroke:#f59e0b,color:#fff
-    style INTERNET fill:#1e40af,stroke:#3b82f6,color:#fff
-    style UBCLOUD fill:#2d1a4a,stroke:#8b5cf6,color:#fff
-    style GUEST fill:#0e7490,stroke:#06b6d4,color:#fff
-    style ADMIN fill:#1e3a5f,stroke:#60a5fa,color:#fff
-    style WIFI fill:#0e7490,stroke:#06b6d4,color:#fff
-```
-
----
-
-## 5. Layer 3: Data Security
-
-```mermaid
-%%{init: {'theme': 'base', 'themeVariables': {'primaryColor': '#0f172a', 'lineColor': '#a78bfa'}}}%%
-graph TD
-    subgraph STORAGE["💾 ON-PREMISES STORAGE ONLY"]
-        UNVR5["UNVR — Video footage\n~30 day retention\nAuto-overwrite after 30 days\n2× 4TB HDD"]
-        LOGS["UniFi Access — Event logs\n90 day retention\nEvery fob tap recorded"]
-    end
-
-    subgraph WHO["👁️ WHO CAN ACCESS"]
-        A1["GHS Admin\nFull access — live + recorded"]
-        A2["Board Members\nViewer — cannot delete or export"]
-        A3["Howard\nSuper Admin — all access"]
-        NO["❌ Residents\n❌ Outside parties\n❌ Law enforcement\n   (without board vote + Luke Burke)"]
-    end
-
-    subgraph LEGAL["⚖️ SHARING POLICY"]
-        S1["Law enforcement\nRequires lawful request\nBoard decision + Luke Burke"]
-        S2["Incident parties\nRequires board approval\nDocumented in decisions log"]
-        S3["Court order\nComply as legally required\nNotify Luke Burke first"]
-        NEVER["🚫 Never share informally\nNever share with neighbors\nNever share without board vote"]
-    end
-
-    STORAGE --> WHO
-    WHO --> LEGAL
-
-    style STORAGE fill:#4c1d95,stroke:#a78bfa,color:#e9d5ff
-    style WHO fill:#0c2a1a,stroke:#10b981,color:#a7f3d0
-    style LEGAL fill:#1e1b4b,stroke:#6366f1,color:#c7d2fe
-    style UNVR5 fill:#2e1065,stroke:#a78bfa,color:#fff
-    style LOGS fill:#2e1065,stroke:#a78bfa,color:#fff
-    style A1 fill:#065f46,stroke:#10b981,color:#fff
-    style A2 fill:#065f46,stroke:#10b981,color:#fff
-    style A3 fill:#065f46,stroke:#10b981,color:#fff
-    style NO fill:#7f1d1d,stroke:#ef4444,color:#fecaca
-    style S1 fill:#1e3a5f,stroke:#3b82f6,color:#fff
-    style S2 fill:#1e3a5f,stroke:#3b82f6,color:#fff
-    style S3 fill:#1e3a5f,stroke:#3b82f6,color:#fff
-    style NEVER fill:#7f1d1d,stroke:#ef4444,color:#fecaca
-```
-
----
-
-## 6. Layer 4: Monitoring — Smart Alert Configuration
-
-| Camera | Alert Trigger | Hours | Recipient |
-|---|---|---|---|
-| AI-360 Pool North | Person detected | After pool hours | GHS via app |
-| AI-360 Pool South | Person detected | After pool hours | GHS via app |
-| AI-Pro Parking | Vehicle detected | After midnight | GHS via app |
-| AI-Pro Clubhouse Door | Person at door | After business hours | GHS via app |
-| AI-Bullet Perimeter | Person detected | Any time | GHS via app |
-| AI-Pro Front Gate LPR | Always recording | Always | No alert — review on demand |
-| AI-Pro Rear Gate LPR | Always recording | Always | No alert — review on demand |
-
-**Gate access alerts — configure in UniFi Access:**
-
-```mermaid
-%%{init: {'theme': 'base', 'themeVariables': {'primaryColor': '#0c2a1a', 'lineColor': '#10b981'}}}%%
-graph LR
-    EVENTS["🔑 Access Events"] --> Q{"Event type?"}
-    Q -->|"Normal entry"| LOG["📋 Logged only\nNo alert"]
-    Q -->|"Denied — unknown credential"| ALERT1["🚨 Alert GHS\nPossible unauthorized attempt"]
-    Q -->|"Door held open > threshold"| ALERT2["🚨 Alert GHS\nPossible propped door"]
-    Q -->|"3+ failures same credential"| ALERT3["🚨 Alert GHS\nPossible malfunction or fob issue"]
-
-    style EVENTS fill:#065f46,stroke:#10b981,color:#fff
-    style Q fill:#1e3a5f,stroke:#3b82f6,color:#fff
-    style LOG fill:#374151,stroke:#6b7280,color:#d1d5db
-    style ALERT1 fill:#7f1d1d,stroke:#ef4444,color:#fecaca
-    style ALERT2 fill:#7c2d12,stroke:#f97316,color:#fed7aa
-    style ALERT3 fill:#92400e,stroke:#f59e0b,color:#fde68a
-```
-
----
-
-## 7. Layer 5: Incident Response — Escalation Path
-
-```mermaid
-%%{init: {'theme': 'base', 'themeVariables': {'primaryColor': '#0f172a', 'lineColor': '#6366f1'}}}%%
-flowchart TD
-    INC(["🚨 Incident Occurs"]) --> GHS3
-
-    subgraph TIER1["TIER 1 — GHS First Response"]
-        GHS3["GHS — Sharon / Kevin\nsupport@greenvillehoa.com\n864-213-2156"]
-    end
-
-    GHS3 --> Q2{"Can GHS\nresolve?"}
-    Q2 -->|"✅ Yes — routine"| RESOLVE["Handle and document\nNote in access log"]
-    Q2 -->|"Board decision needed"| HOWARD["📞 Contact Howard Rapp\nhowarddalerapp@gmail.com"]
-    Q2 -->|"🚔 Criminal matter"| POLICE["Call 911 immediately\nThen contact Howard"]
-    Q2 -->|"🔧 Technical failure"| HOWARD
-
-    HOWARD --> Q3{"Legal\nquestion?"}
-    Q3 -->|"No"| HRESOLVE["Howard resolves\nDocuments in ARGUS log"]
-    Q3 -->|"Yes / footage sharing"| LUKE["⚖️ Luke Burke\nlburke@gvlattorney.com"]
-    POLICE --> LUKE
-
-    LUKE --> LEGAL_ACT["Legal action\nas advised"]
-
-    subgraph DOC["📋 ALWAYS DOCUMENT"]
-        D1["Date + time\nWhat was observed\nAction taken\nBy whom"]
-    end
-
-    RESOLVE --> DOC
-    HRESOLVE --> DOC
-    LEGAL_ACT --> DOC
-
-    style INC fill:#7f1d1d,stroke:#ef4444,color:#fff
-    style TIER1 fill:#0c2a1a,stroke:#10b981,color:#a7f3d0
-    style GHS3 fill:#065f46,stroke:#10b981,color:#fff
-    style Q2 fill:#1e3a5f,stroke:#3b82f6,color:#fff
-    style RESOLVE fill:#14532d,stroke:#22c55e,color:#bbf7d0
-    style HOWARD fill:#92400e,stroke:#f59e0b,color:#fde68a
-    style POLICE fill:#7f1d1d,stroke:#ef4444,color:#fecaca
-    style Q3 fill:#1e3a5f,stroke:#3b82f6,color:#fff
-    style HRESOLVE fill:#14532d,stroke:#22c55e,color:#bbf7d0
-    style LUKE fill:#4c1d95,stroke:#a78bfa,color:#e9d5ff
-    style LEGAL_ACT fill:#1e1b4b,stroke:#6366f1,color:#c7d2fe
-    style DOC fill:#1e3a5f,stroke:#60a5fa,color:#bfdbfe
-```
-
-**Common incident quick reference:**
-
-| Incident | Immediate Response |
+| Zone | Who has access |
 |---|---|
-| Pool break-in / vandalism | GHS exports footage, notifies Howard. Howard contacts police if appropriate, Luke Burke if legal questions. |
-| Gate stuck open | GHS attempts remote lock via dashboard. If fails, dispatch on-site. Contact Howard. |
-| Unauthorized person in pool | Review footage. If pattern, trespass notice via Luke Burke. |
-| Lost or stolen fob | GHS deactivates immediately in UniFi Access. Zero delay. |
-| LTE outage at gate | Gates continue operating (offline mode). Visitor intercom unavailable. Howard investigates. |
-| System compromise suspected | Change all admin passwords immediately. Review access logs. Notify Howard. Consult Luke Burke if data exposure possible. |
+| Vehicle gates (entry) | All credentialed residents |
+| Pool gate | All credentialed residents (seasonal schedule: pool hours only) |
+| Clubhouse door | GHS staff, board members, authorized residents (not all residents by default) |
+| UniFi dashboard — admin | Howard Rapp, GHS (Sharon and Kevin Bragman) |
+| UniFi dashboard — viewer | All board members, Ruth Jansen |
+
+**Access schedules:**
+- Pool gate should be configured with access hours matching the posted pool schedule (e.g., 7am–10pm). Access outside hours should require a board override.
+- Vehicle gates are 24/7 for credentialed residents.
+- Clubhouse door hours can be restricted to business hours by default, with GHS admin override for events.
+
+**Offline behavior at gates:**
+The Access Hub at each gate caches all active credentials locally. If LTE connectivity drops, residents can still enter using their fob or NFC. The hub resumes syncing new credentials and access logs when connectivity is restored. No resident is ever locked out due to a network outage.
 
 ---
 
-## 8. Layers 6 and 7: Audit, Accountability, and Legal
+## Layer 2: Network Security
 
-```mermaid
-%%{init: {'theme': 'base', 'themeVariables': {'primaryColor': '#0f172a', 'lineColor': '#a855f7'}}}%%
-graph LR
-    subgraph DUTIES["SEPARATION OF DUTIES"]
-        OP["🏢 GHS\nOperational layer\nResidents + credentials\nDay-to-day ops"]
-        TECH["👤 Howard\nTechnical layer\nSystem config + security policy\nNo GHS config changes without approval"]
-        GOV["📋 Board\nGovernance layer\nPolicy approval\nIncident review"]
-        LEGAL2["⚖️ Luke Burke\nLegal layer\nData policy review\nLPR sign-off\nFootage sharing guidance"]
-    end
+Network segmentation ensures that a compromise of one system cannot propagate to others. See ARGUS_Network_Architecture.md for full VLAN and IP details.
 
-    OP <-->|"Operations reports"| GOV
-    TECH <-->|"Technical reports"| GOV
-    TECH -->|"Policy questions"| LEGAL2
-    GOV -->|"Directs"| OP
-    GOV -->|"Directs"| TECH
+**Core firewall rules:**
 
-    subgraph REQUIRED["⚠️ HARD REQUIREMENTS"]
-        R1["Luke Burke review of LPR\ndata handling policy\nREQUIRED before Phase 3 go-live"]
-        R2["Privacy notices posted\nat all camera locations\nbefore any system is live"]
-        R3["Board vote to adopt\ndata handling policy\ndocumented in decisions log"]
-        R4["Ables Insurance notified\nafter Phase 1 completion\n864-987-9900"]
-    end
+| Rule | Description | Rationale |
+|---|---|---|
+| Cameras → Outbound blocked | Camera VLAN (10) has no direct internet access | Prevents cameras from being used as botnet nodes or exfiltrating footage |
+| Cameras → UNVR only | Camera VLAN can only communicate with the UNVR | Footage stays on-premises, cameras are isolated |
+| Access Hubs → Cloud HTTPS only | VLAN 20 allows only outbound HTTPS to Ubiquiti's cloud endpoints | Limits attack surface, prevents lateral movement |
+| Guest WiFi → Isolated | Pool/guest WiFi VLAN is fully blocked from all security VLANs | Residents on WiFi cannot see or interact with cameras or access control |
+| No inbound port forwarding | The UCG-Ultra has no public ports open | Eliminates exposure to internet-based attacks |
+| Admin access → VPN only (if remote) | Remote dashboard access via UniFi's encrypted relay, not open ports | No exposed management interface |
 
-    LEGAL2 --> REQUIRED
+**Password policy:**
+- UniFi dashboard admin password: minimum 16 characters, unique, stored in ARGUS folder credentials document (not this file).
+- All default credentials changed before any device goes online.
+- No shared passwords. Each admin user has their own login.
 
-    style DUTIES fill:#0f172a,stroke:#475569,color:#e2e8f0
-    style OP fill:#065f46,stroke:#10b981,color:#fff
-    style TECH fill:#1e3a5f,stroke:#3b82f6,color:#fff
-    style GOV fill:#4c1d95,stroke:#a78bfa,color:#fff
-    style LEGAL2 fill:#500724,stroke:#ec4899,color:#fff
-    style REQUIRED fill:#7f1d1d,stroke:#ef4444,color:#fecaca
-    style R1 fill:#450a0a,stroke:#ef4444,color:#fca5a5
-    style R2 fill:#450a0a,stroke:#ef4444,color:#fca5a5
-    style R3 fill:#450a0a,stroke:#ef4444,color:#fca5a5
-    style R4 fill:#450a0a,stroke:#ef4444,color:#fca5a5
-```
+**Firmware policy:**
+- UniFi devices auto-update on a controlled schedule. Howard reviews and applies updates within 30 days of release.
+- No device runs firmware more than two major versions behind.
 
 ---
 
-## 9. Phase-by-Phase Security Checklists
+## Layer 3: Data Security
 
-```mermaid
-%%{init: {'theme': 'base', 'themeVariables': {'primaryColor': '#0f172a', 'lineColor': '#10b981'}}}%%
-graph LR
-    subgraph P1C["✅ PHASE 1 CHECKLIST"]
-        P1A["All default passwords changed\nbefore any device goes online"]
-        P1B["VLAN isolation verified\ncameras can't reach other VLANs"]
-        P1C2["No public-facing ports open\non UCG-Ultra"]
-        P1D["UNVR recording verified\nall 5 cameras live"]
-        P1E["GHS admin accounts created\nboard viewer accounts created"]
-        P1F["Controller config backed up\nto ARGUS Google Drive"]
-        P1G["Privacy notices posted\nclubhouse and pool locations"]
-    end
+**Video retention:**
+- Standard retention: 30 days at 1080p continuous recording (5 cameras).
+- Footage is stored on the UNVR hard drives (on-premises only). Nothing is stored in Ubiquiti's cloud.
+- After 30 days, footage is automatically overwritten. Board must request a clip export before the retention window expires if footage is needed for an incident.
 
-    subgraph P2C["✅ PHASE 2 CHECKLIST"]
-        P2A["All fobs registered\nwith resident names in UniFi Access"]
-        P2B["Pool gate hours set\nto match posted pool schedule"]
-        P2C2["Clubhouse door restricted\nto authorized personnel only"]
-        P2D["GHS trained on\naccess log review process"]
-        P2E["Incident response procedure\nshared with GHS in writing"]
-        P2F["Maglock contractor work reviewed\nfire egress verified"]
-    end
+**Who can view footage:**
+- GHS (admin): Full access to live and recorded footage.
+- Board members (viewer): Can view footage; cannot delete or export without Howard's assistance.
+- No resident or outside party has any access to camera footage.
+- Footage shared with law enforcement requires a board decision and attorney consultation. Do not share footage informally.
 
-    subgraph P3C["⚠️ PHASE 3 CHECKLIST"]
-        P3A["🔴 Luke Burke sign-off\non LPR data handling\nHARD BLOCK — DO NOT SKIP"]
-        P3B["Board vote on data policy\ndocumented in decisions log"]
-        P3C2["Privacy notices at\nboth gate entry points"]
-        P3D["LTE stable 48h+ at each gate\nbefore cutover"]
-        P3E["Offline failover tested\nLTE SIM pulled · fob still works"]
-        P3F["LPR cameras capturing plates\nat entry distance"]
-        P3G["Visitor intercom tested\nGHS confirmed receiving calls"]
-        P3H["CPS system confirmed offline\nbefore declaring ARGUS live"]
-        P3I["Ables Insurance notified\n864-987-9900"]
-    end
+**Access logs:**
+- Every credential event is logged: who (which fob/credential), what (which door/gate), when (date/time), and outcome (granted/denied).
+- Logs are retained for a minimum of 90 days in UniFi Access.
+- Logs should be reviewed monthly by GHS as part of routine operations.
 
-    style P1C fill:#0c2a1a,stroke:#10b981,color:#a7f3d0
-    style P2C fill:#0c1e3a,stroke:#3b82f6,color:#bfdbfe
-    style P3C fill:#2a0a0a,stroke:#ef4444,color:#fecaca
-    style P3A fill:#450a0a,stroke:#ef4444,color:#fca5a5
+**Data handling at the gates (legal requirement):**
+- Before Phase 3 gates go live, Luke Burke must review the LPR camera data handling policy. License plate data associated with resident movement patterns may trigger SC privacy considerations.
+- A written policy must exist before the system is activated, covering: what data is collected, how long it is retained, who can access it, and under what circumstances it will be shared.
+- This is a hard gate — Phase 3 does not go live without attorney sign-off.
+
+**Backups:**
+- UniFi controller configuration should be backed up monthly to a file stored in the ARGUS Google Drive folder.
+- UNVR footage is not backed up (30-day overwrite is by design). If long-term archival of specific footage is needed, export and store in a designated secure location.
+
+---
+
+## Layer 4: Monitoring and Detection
+
+**AI-powered detection (UniFi Protect):**
+- All cameras use UniFi AI for smart detection. Alerts are generated for: person detection, vehicle detection, package detection (where applicable), and motion in defined zones.
+- Detection sensitivity is configured per-camera during Phase 1 installation.
+- GHS receives push alerts for significant detection events. Nuisance alerts (routine traffic) are filtered by zone configuration.
+
+**Recommended alert configuration:**
+
+| Camera | Alert trigger | Recipient |
+|---|---|---|
+| Pool deck (AI-360 x2) | Person detected after pool hours | GHS via app |
+| Parking lot (AI-Pro) | Vehicle detected after midnight | GHS via app |
+| Clubhouse exterior (AI-Pro) | Person at door after business hours | GHS via app |
+| Perimeter (AI-Bullet) | Person detected (any time) | GHS via app |
+| Front gate LPR | Camera always recording, no alert | N/A |
+| Rear gate LPR | Camera always recording, no alert | N/A |
+
+**Gate access alerts:**
+- Configure UniFi Access to alert GHS on: denied access attempts (credential not recognized), door held open too long, and repeated failures (possible credential stuffing).
+
+**Weekly review:**
+- GHS should review access logs weekly for anomalies: credentials used at unusual hours, unusual frequency of access, any denied attempts.
+- Board president receives a brief monthly summary from GHS.
+
+---
+
+## Layer 5: Incident Response
+
+**Escalation path:**
+
 ```
+  Incident occurs
+       │
+       ▼
+  GHS (first response) — Sharon / Kevin Bragman
+  │  support@greenvillehoa.com | 864-213-2156
+  │
+  ├─▶ Can resolve (routine access issue, footage request)?
+  │      └─▶ Handle and document in access log
+  │
+  ├─▶ Requires board decision?
+  │      └─▶ Contact Howard Rapp: howarddalerapp@gmail.com
+  │
+  ├─▶ Potential criminal matter?
+  │      └─▶ Contact Howard Rapp immediately
+  │          Howard contacts Luke Burke: lburke@gvlattorney.com
+  │          Do NOT share footage with anyone until attorney advises
+  │
+  └─▶ System down / technical failure?
+         └─▶ Contact Howard Rapp: howarddalerapp@gmail.com
+             (Howard is system owner and sole technical resource)
+```
+
+**Incident documentation:**
+Every incident involving the ARGUS system should be documented. At minimum, record: date/time, what was observed, what action was taken, and by whom. GHS maintains this log in the CINC system. A copy of any significant incident goes to Howard.
+
+**Common incidents and responses:**
+
+| Incident | Immediate response |
+|---|---|
+| Pool break-in or vandalism | GHS reviews footage, exports clip, notifies Howard. Howard contacts police if appropriate, Luke Burke if legal questions arise. |
+| Gate not opening for credentialed resident | GHS checks UniFi Access for the credential status. If deactivated in error, reactivate. If system issue, check LTE status. Escalate to Howard if unresolved. |
+| Gate stuck open | GHS attempts remote close via dashboard. If fails, dispatch to site. Gate operator manual override exists (see Phase 3 as-built notes). |
+| Unauthorized person in pool area | Review footage. If ongoing, notify police. If trespassing pattern, consider issuing trespass notice (consult Luke Burke). |
+| Lost/stolen fob | Resident contacts GHS. GHS deactivates immediately in UniFi Access, issues replacement fob. Zero-delay deactivation is critical. |
+| System compromise suspected | Howard to be notified immediately. Change all admin passwords. Review access logs for anomalous activity. Consult Luke Burke if data exposure is possible. |
+| LTE outage at gate | Gates continue to function for credentialed residents (offline mode). Visitor intercom is unavailable. Howard monitors and contacts carrier. |
+
+---
+
+## Layer 6: Audit and Accountability
+
+**Board oversight:**
+- Howard, as system owner, retains Super Admin access. No other person has Super Admin.
+- GHS has Admin access for day-to-day operations but cannot delete footage or modify system configuration without Howard's knowledge.
+- Board members have Viewer access only. They can review footage and logs but cannot make changes.
+
+**Annual review:**
+Once per year, Howard reviews: all admin accounts and their access levels, fob inventory vs. current resident roster, firmware versions, system health, and the security plan itself for any needed updates.
+
+**Change control:**
+Any change to system configuration (VLAN rules, firewall policy, access schedules, user permissions) must be documented in the Decisions Log. Undocumented changes by GHS are not authorized.
+
+**Separation of duties:**
+- GHS manages residents and credentials (operational layer).
+- Howard manages system configuration and security policy (technical layer).
+- Board approves policy changes and reviews incidents (governance layer).
+- Luke Burke advises on legal questions before policies are implemented.
+
+---
+
+## Layer 7: Legal and Compliance
+
+**Privacy notices:**
+Before the system goes live, physical notices must be posted at all camera locations and gate entry points. Required language varies but should include: that the area is under video surveillance, that footage is retained for 30 days, and a contact for questions (GHS contact information).
+
+**Required before Phase 3 go-live:**
+- Luke Burke to review LPR data handling policy (license plate capture = resident movement data).
+- Written data retention and handling policy must exist.
+- Board must formally vote to adopt the policy.
+
+**Footage sharing policy:**
+Footage may only be shared with: law enforcement pursuant to a lawful request, parties involved in an incident with board approval, or as required by a court order. Footage is never shared informally with residents, neighbors, or other third parties. All sharing decisions require board approval and are documented.
+
+**Insurance notice:**
+The ARGUS system is a security improvement that may affect the HOA's liability profile. Howard should notify Ables Insurance that the system has been installed once Phase 1 is complete, and ask whether it affects the E&O/D&O policy or qualifies for any premium adjustment.
+
+---
+
+## Security Checklist — Pre-Go-Live (Each Phase)
+
+### Phase 1 Checklist
+- [ ] All default passwords changed on all devices
+- [ ] VLAN configuration verified — cameras isolated from other VLANs
+- [ ] No public-facing ports open on UCG-Ultra
+- [ ] UNVR recording verified for all 5 cameras
+- [ ] Retention period confirmed at ~30 days
+- [ ] GHS admin accounts created and tested
+- [ ] Board viewer accounts created and tested
+- [ ] Controller configuration backup saved to ARGUS Google Drive
+- [ ] Privacy notices posted at clubhouse and pool
+
+### Phase 2 Checklist
+- [ ] All fobs registered in UniFi Access with resident names
+- [ ] Pool gate access schedule set to pool hours
+- [ ] Clubhouse door access restricted to authorized personnel
+- [ ] Access log review process communicated to GHS
+- [ ] Incident response procedure shared with GHS
+- [ ] Maglock contractor work reviewed — fire egress verified
+
+### Phase 3 Checklist
+- [ ] Luke Burke sign-off on LPR data handling policy — **DO NOT SKIP**
+- [ ] Board vote on data handling policy documented in Decisions Log
+- [ ] Privacy notices posted at both gate entry points
+- [ ] LTE connectivity confirmed stable at both gates
+- [ ] Offline failover tested at both gates (pull LTE SIM, confirm fob still works)
+- [ ] LPR cameras confirmed capturing plates at entry distance
+- [ ] Visitor intercom tested — GHS confirmed receiving calls
+- [ ] CPS system confirmed offline / terminated before declaring ARGUS live
+- [ ] Ables Insurance notified of ARGUS completion
 
 ---
 

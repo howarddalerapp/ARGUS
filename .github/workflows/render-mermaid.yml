@@ -11,6 +11,11 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+      - name: Check Node (runner)
+        run: |
+          echo "--- Node on runner ---"
+          node -v || echo "node not installed on runner"
+          npm -v || echo "npm not installed on runner"
 
       - name: Setup Node
         uses: actions/setup-node@v4

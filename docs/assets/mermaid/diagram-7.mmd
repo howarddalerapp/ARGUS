@@ -1,0 +1,26 @@
+%%{init: {'theme': 'base', 'themeVariables': {'lineColor': '#10b981'}}}%%
+graph LR
+    subgraph FG["🚗 FRONT GATE — W. Georgia Rd"]
+        FR["🚘 Inbound\nvehicles"]
+        FLPR["📷 AI-Pro LPR\nMounted 8-10ft height\n15-25ft back from gate\n15-20° downward angle\nIR night capture\n192.168.10.21"]
+        FPOST["📍 Entry Post\n👆 Reader Pro\n🔔 AI-Theta-Pro Intercom"]
+        FOPER["⚙️ Gate Operator\nExisting hardware\nUA-Hub dry contact"]
+        FR --> FLPR --> FPOST --> FOPER
+    end
+
+    subgraph RG["🚗 REAR GATE — Secondary Entry"]
+        RR["🚘 Inbound\nvehicles"]
+        RLPR["📷 AI-Pro LPR\nMounted 8-10ft height\n15-25ft back from gate\n192.168.10.22"]
+        RPOST["📍 Entry Post\n👆 Reader Pro\n⛔ No intercom\nResidents + service only"]
+        ROPER["⚙️ Gate Operator\nExisting hardware\nUA-Hub dry contact"]
+        RR --> RLPR --> RPOST --> ROPER
+    end
+
+    style FG fill:#0c2a1a,stroke:#10b981,color:#a7f3d0
+    style RG fill:#0c1e2a,stroke:#06b6d4,color:#a5f3fc
+    style FLPR fill:#065f46,stroke:#10b981,color:#fff
+    style RLPR fill:#065f46,stroke:#10b981,color:#fff
+    style FPOST fill:#78350f,stroke:#fbbf24,color:#fff
+    style RPOST fill:#78350f,stroke:#fbbf24,color:#fff
+    style FOPER fill:#374151,stroke:#9ca3af,color:#fff
+    style ROPER fill:#374151,stroke:#9ca3af,color:#fff
