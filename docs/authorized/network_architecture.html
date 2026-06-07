@@ -1,20 +1,20 @@
 <!doctype html>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<link rel="stylesheet" href="/ARGUS/docs/style.css">
+<link rel="stylesheet" href="/ARGUS/style.css">
 <title>ARGUS — Network Architecture (Authorized)</title>
 <body>
   <header class="site-header">
     <div class="container inner">
       <div class="brand">
-        <img src="/ARGUS/docs/assets/argus_logo_180.png" alt="ARGUS logo">
+  <img src="/ARGUS/assets/argus_logo_180.png" alt="ARGUS logo">
         <div>
           <h1>Network Architecture</h1>
           <p class="tag">Detailed diagrams — authorized viewers</p>
         </div>
       </div>
       <nav class="top-nav">
-        <a href="/ARGUS/docs/authorized/index.html">Back</a>
+  <a href="/ARGUS/authorized/index.html">Back</a>
       </nav>
     </div>
   </header>
@@ -30,7 +30,7 @@
     mermaid.initialize({startOnLoad:false, theme: 'default'});
     // Try to load pre-rendered SVGs first. If none exist, fall back to rendering markdown + mermaid in the browser.
     (async function(){
-      const svgDir = '/ARGUS/docs/assets/mermaid/';
+    const svgDir = '/ARGUS/assets/mermaid/';
       try{
         // Try listing known filenames (diagram-1.svg ... up to 10)
         const container = document.getElementById('content');
@@ -53,7 +53,7 @@
         if(foundAny) return;
 
         // No pre-rendered SVGs found; fetch markdown and render client-side
-        const r = await fetch('/ARGUS/docs/assets/ARGUS_Network_Architecture.md');
+  const r = await fetch('/ARGUS/assets/ARGUS_Network_Architecture.md');
         const md = await r.text();
         container.innerHTML = marked.parse(md);
         document.querySelectorAll('code.language-mermaid, code.mermaid').forEach((block, i)=>{
