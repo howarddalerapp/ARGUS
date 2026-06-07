@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120">
+  <defs>
+    <linearGradient id="g" x1="0" x2="1">
+      <stop offset="0" stop-color="#06b6d4"/>
+      <stop offset="1" stop-color="#3b82f6"/>
+    </linearGradient>
+  </defs>
+  <rect rx="18" ry="18" width="120" height="120" fill="#081826" />
+  <g transform="translate(18,18)">
+    <circle cx="24" cy="24" r="20" fill="url(#g)" />
+    <rect x="48" y="8" width="36" height="32" rx="6" fill="#0f172a" opacity="0.9" />
+    <text x="24" y="30" font-family="Arial, Helvetica, sans-serif" font-size="12" fill="#fff" text-anchor="middle">ARGUS</text>
+  </g>
+</svg>
