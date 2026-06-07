@@ -1,0 +1,37 @@
+%%{init: {'theme': 'base', 'themeVariables': {'primaryColor': '#1e3a5f', 'primaryTextColor': '#ffffff', 'primaryBorderColor': '#3b82f6', 'lineColor': '#60a5fa', 'secondaryColor': '#0f2744', 'tertiaryColor': '#162032'}}}%%
+graph LR
+    subgraph CLUBHOUSE["🏛️  CLUBHOUSE  —  Main Hub"]
+        direction TB
+        C1[WOW Fiber\nBroadband WAN]
+        C2[Network Controller\nAll equipment here]
+        C3[5 Cameras\nFull HD Recording]
+        C4[Pool + Door\nAccess Control]
+    end
+
+    subgraph FGATE["🚗  FRONT GATE  —  W. Georgia Rd"]
+        direction TB
+        F1[LTE Pro\nCellular WAN]
+        F2[Access Hub\nOffline Capable]
+        F3[AI-Theta-Pro\nVisitor Intercom]
+        F4[LPR Camera\nPlate Recognition]
+    end
+
+    subgraph RGATE["🚗  REAR GATE  —  Secondary Entry"]
+        direction TB
+        R1[LTE Pro\nCellular WAN]
+        R2[Access Hub\nOffline Capable]
+        R3[LPR Camera\nPlate Recognition]
+    end
+
+    subgraph CLOUD["☁️  UBIQUITI CLOUD  —  Remote Management"]
+        UC[unifi.ui.com\nHTTPS Only]
+    end
+
+    CLUBHOUSE <-->|"HTTPS / STUN\nEncrypted tunnel"| CLOUD
+    FGATE <-->|"HTTPS / STUN\nCellular"| CLOUD
+    RGATE <-->|"HTTPS / STUN\nCellular"| CLOUD
+
+    style CLUBHOUSE fill:#1a3a5c,stroke:#3b82f6,color:#e2e8f0
+    style FGATE fill:#1a3a2c,stroke:#10b981,color:#e2e8f0
+    style RGATE fill:#1a2a3a,stroke:#06b6d4,color:#e2e8f0
+    style CLOUD fill:#2d1a4a,stroke:#8b5cf6,color:#e2e8f0

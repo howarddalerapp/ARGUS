@@ -1,0 +1,33 @@
+%%{init: {'theme': 'base', 'themeVariables': {'primaryColor': '#0f172a', 'lineColor': '#6b7280'}}}%%
+graph TD
+    LOGIN["🔐 unifi.ui.com\nSingle login for all three apps"]
+
+    subgraph NET["🌐 UniFi Network"]
+        N1["Manages switches, WiFi,\nVLANs, firewall, LTE Pros"]
+        N2["Users: Howard setup\nGHS monitoring"]
+    end
+
+    subgraph PROT["📷 UniFi Protect"]
+        P1["Manages all cameras\nlive view, recording,\nmotion detection, AI alerts"]
+        P2["Users: Howard setup\nGHS daily ops\nBoard viewer"]
+    end
+
+    subgraph ACC["🔑 UniFi Access"]
+        A1["Manages access control\nfobs, doors, gates,\nschedules, access logs"]
+        A2["Users: Howard setup\nGHS daily ops"]
+    end
+
+    LOGIN --> NET
+    LOGIN --> PROT
+    LOGIN --> ACC
+
+    style LOGIN fill:#1e3a5f,stroke:#3b82f6,color:#fff
+    style NET fill:#065f46,stroke:#10b981,color:#a7f3d0
+    style PROT fill:#4c1d95,stroke:#a78bfa,color:#e9d5ff
+    style ACC fill:#92400e,stroke:#f59e0b,color:#fde68a
+    style N1 fill:#0d1f14,stroke:#10b981,color:#86efac
+    style N2 fill:#0d1f14,stroke:#10b981,color:#86efac
+    style P1 fill:#1a0a2a,stroke:#8b5cf6,color:#c4b5fd
+    style P2 fill:#1a0a2a,stroke:#8b5cf6,color:#c4b5fd
+    style A1 fill:#1f120d,stroke:#f59e0b,color:#fcd34d
+    style A2 fill:#1f120d,stroke:#f59e0b,color:#fcd34d

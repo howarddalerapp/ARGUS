@@ -1,0 +1,62 @@
+%%{init: {'theme': 'base', 'themeVariables': {'primaryColor': '#0f2744', 'primaryTextColor': '#ffffff', 'primaryBorderColor': '#3b82f6', 'lineColor': '#60a5fa', 'background': '#0a1628'}}}%%
+graph TD
+    WOW["🌐 WOW FIBER\nBroadband WAN"]
+    UCG["🖥️ UCG-Ultra or CGMax\nGateway · Controller · Firewall\n192.168.1.1"]
+    SW["⚡ USW-Lite-8-POE\nManaged PoE Switch\n192.168.1.20"]
+    UNVR["💾 UNVR\nCamera Recorder\n2 × 4TB HDD · ~30 day retention\n192.168.1.10"]
+    CAM360A["📷 AI-360 · Pool Deck North\n192.168.10.11"]
+    CAM360B["📷 AI-360 · Pool Deck South\n192.168.10.12"]
+    CAMPRO1["📷 AI-Pro · Parking Lot\n192.168.10.13"]
+    CAMPRO2["📷 AI-Pro · Clubhouse Door\n192.168.10.14"]
+    CAMBULLET["📷 AI-Bullet · Perimeter Fence\n192.168.10.15"]
+    AP1["📶 U6 Mesh · Pool Area\n192.168.1.31"]
+    AP2["📶 U6 Mesh · Patio\n192.168.1.32"]
+    AP3["📶 U6 Extender\n192.168.1.33"]
+    HUB1["🔑 Access Hub · Pool Gate\n192.168.20.11"]
+    HUB2["🔑 Access Hub · Clubhouse Door\n192.168.20.12"]
+    READER1["👆 Reader Pro · Pool Entry"]
+    READER2["👆 Reader Lite · Pool Exit"]
+    READER3["👆 Reader Pro · Clubhouse Door"]
+    MAGLOCK["🔒 Maglock\nContractor Install"]
+
+    WOW -->|WAN| UCG
+    UCG -->|LAN trunk| SW
+    SW -->|PoE| UNVR
+    SW -->|PoE VLAN 10| CAM360A
+    SW -->|PoE VLAN 10| CAM360B
+    SW -->|PoE VLAN 10| CAMPRO1
+    SW -->|PoE VLAN 10| CAMPRO2
+    SW -->|PoE VLAN 10| CAMBULLET
+    SW -->|PoE VLAN 40/30| AP1
+    SW -->|PoE VLAN 40/30| AP2
+    SW -->|PoE VLAN 40/30| AP3
+    SW -->|PoE VLAN 20| HUB1
+    SW -->|PoE VLAN 20| HUB2
+    HUB1 --- READER1
+    HUB1 --- READER2
+    HUB2 --- READER3
+    HUB2 --- MAGLOCK
+    UNVR <-->|Records footage| CAM360A
+    UNVR <-->|Records footage| CAM360B
+    UNVR <-->|Records footage| CAMPRO1
+    UNVR <-->|Records footage| CAMPRO2
+    UNVR <-->|Records footage| CAMBULLET
+
+    style WOW fill:#1e40af,stroke:#3b82f6,color:#fff
+    style UCG fill:#1e3a5f,stroke:#60a5fa,color:#fff
+    style SW fill:#1e3a5f,stroke:#60a5fa,color:#fff
+    style UNVR fill:#7c3aed,stroke:#a78bfa,color:#fff
+    style CAM360A fill:#065f46,stroke:#10b981,color:#fff
+    style CAM360B fill:#065f46,stroke:#10b981,color:#fff
+    style CAMPRO1 fill:#065f46,stroke:#10b981,color:#fff
+    style CAMPRO2 fill:#065f46,stroke:#10b981,color:#fff
+    style CAMBULLET fill:#065f46,stroke:#10b981,color:#fff
+    style AP1 fill:#0e7490,stroke:#06b6d4,color:#fff
+    style AP2 fill:#0e7490,stroke:#06b6d4,color:#fff
+    style AP3 fill:#0e7490,stroke:#06b6d4,color:#fff
+    style HUB1 fill:#92400e,stroke:#f59e0b,color:#fff
+    style HUB2 fill:#92400e,stroke:#f59e0b,color:#fff
+    style READER1 fill:#78350f,stroke:#fbbf24,color:#fff
+    style READER2 fill:#78350f,stroke:#fbbf24,color:#fff
+    style READER3 fill:#78350f,stroke:#fbbf24,color:#fff
+    style MAGLOCK fill:#7f1d1d,stroke:#ef4444,color:#fff

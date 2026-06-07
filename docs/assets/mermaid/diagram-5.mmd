@@ -1,0 +1,46 @@
+%%{init: {'theme': 'base', 'themeVariables': {'primaryColor': '#111827', 'lineColor': '#4b5563'}}}%%
+graph LR
+    GW["🖥️ Gateway\nUCG-Ultra / CGMax"]
+
+    subgraph V1["VLAN 1 — Management  192.168.1.0/24"]
+        M1["Controller · Switch · UNVR · APs"]
+    end
+
+    subgraph V10["VLAN 10 — Cameras  192.168.10.0/24"]
+        M10["All cameras — clubhouse + gates\n🚫 No internet access\n✅ UNVR only"]
+    end
+
+    subgraph V20["VLAN 20 — Access Control  192.168.20.0/24"]
+        M20["All Access Hubs · LTE Pros\n🚫 No local network access\n✅ Ubiquiti cloud HTTPS only"]
+    end
+
+    subgraph V30["VLAN 30 — Guest WiFi  192.168.30.0/24"]
+        M30["Resident devices at pool\n✅ Internet access\n🚫 Blocked from all security VLANs"]
+    end
+
+    subgraph V40["VLAN 40 — Staff WiFi  192.168.40.0/24"]
+        M40["GHS + board devices\n✅ Internet access\n✅ Admin dashboard only"]
+    end
+
+    GW <-->|"Trunk"| V1
+    GW <-->|"Routed\nFirewall enforced"| V10
+    GW <-->|"Routed\nFirewall enforced"| V20
+    GW <-->|"Routed\nFirewall enforced"| V30
+    GW <-->|"Routed\nFirewall enforced"| V40
+
+    V10 x--x|"BLOCKED"| V20
+    V10 x--x|"BLOCKED"| V30
+    V20 x--x|"BLOCKED"| V30
+    V30 x--x|"BLOCKED"| V40
+
+    style GW fill:#1e3a5f,stroke:#3b82f6,color:#fff
+    style V1 fill:#1a2a1a,stroke:#10b981,color:#a7f3d0
+    style V10 fill:#1a1a2e,stroke:#6366f1,color:#c7d2fe
+    style V20 fill:#2a1a0a,stroke:#f59e0b,color:#fde68a
+    style V30 fill:#0a1a2a,stroke:#06b6d4,color:#a5f3fc
+    style V40 fill:#1a0a2a,stroke:#8b5cf6,color:#e9d5ff
+    style M1 fill:#0d1f0d,stroke:#10b981,color:#86efac
+    style M10 fill:#0d0d1f,stroke:#6366f1,color:#a5b4fc
+    style M20 fill:#1f120d,stroke:#f59e0b,color:#fcd34d
+    style M30 fill:#0d121f,stroke:#06b6d4,color:#67e8f9
+    style M40 fill:#120d1f,stroke:#8b5cf6,color:#c4b5fd

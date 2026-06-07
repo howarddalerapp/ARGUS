@@ -6,8 +6,15 @@ on:
 jobs:
   create:
     runs-on: ubuntu-latest
+    env:
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: 'true'
     steps:
       - uses: actions/checkout@v4
+      - name: Check Node (runner)
+        run: |
+          echo "--- Node on runner ---"
+          node -v || echo "node not installed on runner"
+          npm -v || echo "npm not installed on runner"
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
