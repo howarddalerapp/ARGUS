@@ -1,6 +1,18 @@
 # Project ARGUS
 ## River Shoals HOA — Security Infrastructure Modernization
 
+Executive summary
+-----------------
+
+Project ARGUS replaces the current third-party security system with a board-owned, defensible, and low-cost UniFi-based solution for cameras, access control, and gate management. The objective is to reduce long-term operating expenses, improve local control and privacy, and provide a clear operational model for GHS and the board.
+
+Key outcomes:
+- One-time equipment investment (~$8.3k) and predictable operating costs (~$50–70/month).
+- Phased cutover with zero downtime for residents.
+- Local on-premises storage for footage and strict access/logging controls.
+
+Why this matters: CPS invoices and reactive repairs have proven costly; ARGUS provides an owner-managed alternative with a rapid break-even vs ongoing CPS spend.
+
 > **Project name:** In Greek myth, Argus Panoptes was a giant with a hundred eyes — the ever-watchful guardian who never slept. The name fits a project whose purpose is community-wide visibility and access control across the clubhouse, pool, and both gates — all owned and managed by the board itself.
 
 ---
@@ -59,7 +71,7 @@ graph LR
 
 | Field | Detail |
 |---|---|
-| Community | River Shoals HOA, Simpsonville SC — 280+ lots |
+| Community | River Shoals HOA, Simpsonville SC — 440 homes |
 | Objective | Replace CPS vendor-managed security with board-owned Ubiquiti UniFi |
 | Equipment Budget | ~$8,305 before SC sales tax (~$8,886 with tax at 7%) |
 | Ongoing Operating Cost | ~$50-70/month for 2× LTE SIM plans at gates |

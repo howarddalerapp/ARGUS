@@ -44,7 +44,7 @@ Scope: Replace existing pool RFID system with UniFi Access. Add access control t
 | Access Reader Lite (pool exit) | UA-Reader-Lite | 1 | $79 | $79 | Exit reader, pool side |
 | Access Hub (clubhouse door) | UA-Hub | 1 | $149 | $149 | Controls clubhouse door lock |
 | Access Reader Pro (clubhouse) | UA-Reader-Pro | 1 | $179 | $179 | Resident fob/NFC tap to enter |
-| Key fob stock (~100 fobs) | UA-Fob | 10 pk | $89 | $890 | First issuance batch (~280 lots total; second batch needed later) |
+| Key fob stock (~100 fobs) | UA-Fob | 10 pk | $89 | $890 | First issuance batch (~440 homes total; second batch may be needed later) |
 | Wiring, power supply, misc hardware | — | 1 | $247 | $247 | Conduit, low-voltage cabling, junction boxes |
 | Maglock/strike installation (outside contractor) | — | 1 | $500 | $500 | Clubhouse door only — fire egress wiring required |
 
